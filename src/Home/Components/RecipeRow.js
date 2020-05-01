@@ -29,16 +29,16 @@ export function RecipeRow(recipe: Recipe) {
                 flex: 1,
                 flexDirection: 'column',
             }}>
-            <Text style={styles.title}>{recipe.name.value}</Text>
-            <View>
-                <Text>Ingrédients: {recipe.printIngredients()}.</Text>
+                <Text style={styles.title}>{recipe.name.value}</Text>
+                <View>
+                    <Text>Ingrédients: {recipe.printIngredients()}.</Text>
+                </View>
             </View>
-        </View>
 
-        <Button
-            title='Voir la recette'
-            onPress={WebBrowser.openBrowserAsync.bind(this, recipe.url)}
-        />
+            <Button
+                title='Voir la recette'
+                onPress={WebBrowser.openBrowserAsync.bind(this, recipe.url)}
+            />
         </View>
     );
 };
