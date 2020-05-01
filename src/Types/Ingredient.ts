@@ -15,7 +15,6 @@ function Ingredient(name: SearchableString, seasonality: Months[]) {
             return seasonality.filter(m => m.name.includes(p)).length != 0;
         },
         matchesPattern(p: Pattern): boolean {
-            console.log(`pattern ${p} name ${name.value} ${name.includes(p) || this.isAvailableIn(p)}`)
             return name.includes(p) || this.isAvailableIn(p);
         },
     });

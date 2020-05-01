@@ -1,9 +1,9 @@
+import {useState} from "react";
 import Months from './Months';
-import {Pattern} from './Patterns';
+import {Pattern, parsePatterns} from './Patterns';
 import Ingredients from './Ingredient';
 import {exists, forall} from './functions'
 import SearchableString from './SearchableString';
-import {useState} from "react";
 
 const {chickpea, coconutMilk, lentils, tomatoes} = Ingredients;
 
@@ -20,7 +20,7 @@ const veganBolognese = Recipe(
 
 const allRecipes: Recipe[] = [chickpeaCurry, veganBolognese];
 
-function Recipe(name: SearchableString, ingredients: Ingredient[], url: string) {
+export function Recipe(name: SearchableString, ingredients: Ingredient[], url: string) {
 
     function matchesPattern(p: Pattern): boolean {
         const ingredientMatches = (i: Ingredient) => i.matchesPattern(p);
@@ -42,17 +42,14 @@ function Recipe(name: SearchableString, ingredients: Ingredient[], url: string) 
     });
 }
 
-export default {
-    Recipe: Recipe,
-    useFilteredRecipes(): [Recipe[], ((string) => void)] {
-        const [filteredRecipes, setFilteredRecipes] = useState(Recipe.allRecipes);
+export function useFilteredRecipes(): [Recipe[], ((string) => void)] {
+    const [filteredRecipes, setFilteredRecipes] = useState(Recipe.allRecipes);
 
-        const filterRecipes: void = (text: string) => {
-            const patterns: Pattern[] = parsePatterns(text);
-            const filtered = allRecipes.filter((recipe) => recipe.matchesPatterns(patterns));
-            setFilteredRecipes(filtered);
-        }
+    const filterRecipes: void = (text: string) => {
+        const patterns: Pattern[] = parsePatterns(text);
+        const filtered = allRecipes.filter((recipe) => recipe.matchesPatterns(patterns));
+        setFilteredRecipes(filtered);
+    }
 
-        return [filteredRecipes, filterRecipes];
-    },
+    return [filteredRecipes, filterRecipes];
 }

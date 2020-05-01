@@ -9,42 +9,19 @@ import {
   Button,
 } from "react-native";
 import logo from "./assets/logo.png";
-import Months from "./types/Months";
-import * as Ingredient from "./types/Ingredient";
-import Recipe from "./types/Recipe";
-import * as WebBrowser from "expo-web-browser";
-import SearchableString from './types/SearchableString';
-import {Pattern, parsePatterns} from './types/Patterns';
-import {forall} from './types/functions';
+import Months from "./src/Types/Months";
+import * as Ingredient from "./src/Types/Ingredient";
+import {useFilteredRecipes} from "./src/Types/Recipe";
+import SearchableString from './src/Types/SearchableString';
+import {Pattern, parsePatterns} from './src/Types/Patterns';
+import {forall} from './src/Types/functions';
+import {RecipeRow} from './src/Home/Components/RecipeRow';
 
 type Search = string;
 
-
 export default function App() {
-  console.log(Recipe);
-  const [filteredRecipes, filterRecipes] = Recipe.useFilteredRecipes();
-  const OpenURLButton = (recipe) => {
-
-    return (
-      <View style={styles.recipeRow}>
-        <View style={{
-          flex: 1,
-          flexDirection: 'column',
-        }}>
-          <Text style={styles.recipeTitle}>{recipe.name.value}</Text>
-          <View>
-            <Text>Ingrédients: {recipe.printIngredients()}.</Text>
-          </View>
-        </View>
-
-        <Button
-          title='Voir la recette'
-          onPress={WebBrowser.openBrowserAsync.bind(this, recipe.url)}
-        />
-      </View>
-    );
-  };
-
+  const [filteredRecipes, filterRecipes] = useFilteredRecipes();
+  
   return (
     <View style={styles.container}>
       <View style={styles.column} />
@@ -55,14 +32,13 @@ export default function App() {
         />
         <FlatList
           data={filteredRecipes}
-          renderItem={(row) => OpenURLButton(row.item)}
+          renderItem={(row) => RecipeRow(row.item)}
           keyExtractor={(item) => item.name.value}
         />
       </View>
       <View style={styles.column} />
     </View>
   );
-  return null;
 }
 
 const styles = StyleSheet.create({
@@ -74,15 +50,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     flexDirection: 'row',
     justifyContent: "center",
-  },
-  recipeRow: {
-    borderWidth: 1,
-    borderColor: "#888",
-    flex: 1,
-    flexDirection: 'row'
-  },
-  recipeTitle: {
-    fontWeight: 'bold',
-    size: 16
   }
 });
