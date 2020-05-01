@@ -5,7 +5,20 @@ import Ingredients from './Ingredient';
 import {exists, forall} from './functions'
 import SearchableString from './SearchableString';
 
-const {chickpea, coconutMilk, lentils, tomatoes} = Ingredients;
+const {
+    chickpea, 
+    coconutMilk, 
+    lentils, 
+    tomato, 
+    leek,
+    turnip,
+    carrot,
+    celeryBranch,
+    parisMushroom,
+    onion,
+    garlic,
+    soySauce,
+} = Ingredients;
 
 const chickpeaCurry = Recipe(
   SearchableString("Curry de pois-chiches"),
@@ -13,15 +26,18 @@ const chickpeaCurry = Recipe(
   "https://www.youtube.com/watch?v=aP6eXpwIths"
 );
 const veganBolognese = Recipe(
-  SearchableString("Bolognaise Vegan"),
-  [lentils, tomatoes],
+  SearchableString("Bolognaise Végan"),
+  [lentils, tomato],
   "https://www.marmiton.org/recettes/recette_bolognaise-aux-lentilles_27842.aspx"
 );
-
-const allRecipes: Recipe[] = [chickpeaCurry, veganBolognese];
+const veganParmentier = Recipe(
+    SearchableString("Hachis parmentier végan"),
+    [tomato, leek, turnip, carrot, celeryBranch, parisMushroom, onion, garlic, soySauce],
+    "https://www.marmiton.org/recettes/recette_hachis-parmentier-vegetarien_14594.aspx"
+);
+const allRecipes: Recipe[] = [chickpeaCurry, veganBolognese, veganParmentier];
 
 export function Recipe(name: SearchableString, ingredients: Ingredient[], url: string) {
-
     function matchesPattern(p: Pattern): boolean {
         const ingredientMatches = (i: Ingredient) => i.matchesPattern(p);
 
@@ -43,7 +59,7 @@ export function Recipe(name: SearchableString, ingredients: Ingredient[], url: s
 }
 
 export function useFilteredRecipes(): [Recipe[], ((string) => void)] {
-    const [filteredRecipes, setFilteredRecipes] = useState(Recipe.allRecipes);
+    const [filteredRecipes, setFilteredRecipes] = useState(allRecipes);
 
     const filterRecipes: void = (text: string) => {
         const patterns: Pattern[] = parsePatterns(text);

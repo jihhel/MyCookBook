@@ -35,7 +35,11 @@ const wholeYear = [
 ];
 
 function range(begin: Month, end: Month): List[Month] {
-    return wholeYear.filter(m => m.value >= begin.value && m.value <= end.value);    
+    if (begin == end) return begin;
+    if (begin <= end) {
+        return wholeYear.filter(m => m.value >= begin.value && m.value <= end.value);    
+    }
+    return wholeYear.filter(m => m >= end || m <= start);
 }
 
 export default {
