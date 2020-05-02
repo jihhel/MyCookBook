@@ -1,13 +1,15 @@
 {
   "expo": {
-    "name": "veg_recipes",
-    "slug": "veg_recipes",
+    "name": "My Cook Book",
+    "slug": "my_cook_book",
+    "owner": "jihhel",
     "platforms": [
       "ios",
       "android",
       "web"
     ],
     "version": "0.1.0",
+    "sdkVersion": "37.0.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -23,6 +25,7 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "githubUrl": "https://github.com/jihhel/MyCookBook"
   }
 }
