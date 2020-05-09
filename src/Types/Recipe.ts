@@ -1,10 +1,10 @@
 import {useState} from "react";
 import Months from './Months';
 import {Pattern, parsePatterns} from './Patterns';
-import Ingredients from './Ingredient';
+//import Ingredients from './Ingredient';
 import {exists, forall} from './functions'
 import SearchableString from './SearchableString';
-
+/*
 const {
     chickpea, 
     coconutMilk, 
@@ -36,6 +36,9 @@ const veganParmentier = Recipe(
     "https://www.marmiton.org/recettes/recette_hachis-parmentier-vegetarien_14594.aspx"
 );
 const allRecipes: Recipe[] = [chickpeaCurry, veganBolognese, veganParmentier];
+*/
+
+const allRecipes: Recipe[] = [];
 
 export function Recipe(name: SearchableString, ingredients: Ingredient[], url: string) {
     function matchesPattern(p: Pattern): boolean {
@@ -58,6 +61,13 @@ export function Recipe(name: SearchableString, ingredients: Ingredient[], url: s
     });
 }
 
+export function filterRecipes(recipes: Recipes[], search: string): Recipe[] {
+    const patterns: Pattern[] = parsePatterns(search);
+    const filtered = recipes.filter((recipe) => recipe.matchesPatterns(patterns));
+
+    return filtered;
+}
+/*
 export function useFilteredRecipes(): [Recipe[], ((string) => void)] {
     const [filteredRecipes, setFilteredRecipes] = useState(allRecipes);
 
@@ -68,4 +78,4 @@ export function useFilteredRecipes(): [Recipe[], ((string) => void)] {
     }
 
     return [filteredRecipes, filterRecipes];
-}
+}*/

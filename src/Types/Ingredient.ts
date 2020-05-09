@@ -2,7 +2,7 @@ import Months from './Months';
 import {MonthPattern} from './Patterns';
 import SearchableString from './SearchableString';
 
-function Ingredient(name: SearchableString, seasonality: Months[]) {
+export function Ingredient(name: SearchableString, seasonality: Months[]) {
     return ({
         name: name,
         seasonality: seasonality,
@@ -14,7 +14,7 @@ function Ingredient(name: SearchableString, seasonality: Months[]) {
         },
     });
 }
-
+/*
 export default {
     Ingredient: Ingredient,
     coconutMilk: Ingredient(SearchableString("Lait de Coco"), Months.wholeYear),
@@ -29,4 +29,4 @@ export default {
     onion: Ingredient(SearchableString("Oignons"), Months.range(Months.September, Months.April)),
     garlic: Ingredient(SearchableString("Gousse d'ail"), Months.range(Months.July, Months.December)),
     soySauce: Ingredient(SearchableString("Sauce Soja"), Months.wholeYear)
-};
+};*/

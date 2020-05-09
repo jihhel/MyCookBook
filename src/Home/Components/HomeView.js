@@ -1,16 +1,47 @@
-import React from "react";
+import React, {useEffect, useState, useCallback, useRef} from "react";
 import {
   StyleSheet,
   View,
   TextInput,
   FlatList,
 } from "react-native";
-import {useFilteredRecipes} from "../../Types/Recipe";
+import {filterRecipes} from "../../Types/Recipe";
 import {RecipeRow} from './RecipeRow';
+import HomeAPI from '../API/HomeAPI';
 
 export default function HomeView() {
+    const [filteredRecipes, setFilteredRecipes] = useState([]);
+    const [localRecipes, setLocalRecipes] = useState(HomeAPI.getLocalRecipes());
+    const [marmitonRecipes, setMarmitonRecipes] = useState([]);
+    const [textSearch, setTextSearch] = useState("");
+    const textRef = useRef();
 
-    const [filteredRecipes, filterRecipes] = useFilteredRecipes();
+    useEffect(() => {
+        if (textRef.current !== textSearch) {
+            textRef.current = textSearch;
+            updateMarmitonRecipes();
+        }
+    });
+
+    useCallback(() => {
+        updateMarmitonRecipes();
+    }, [textRef]);
+
+    async function updateMarmitonRecipes() {
+        const recipes = await HomeAPI.getMarmitonRecipes(textSearch);
+        setMarmitonRecipes(recipes);
+        updateDisplayedRecipes();
+    }
+
+    function updateDisplayedRecipes() {
+        const newFilteredRecipes = filterRecipes(localRecipes.concat(marmitonRecipes), textSearch);
+        setFilteredRecipes(newFilteredRecipes);
+    }
+
+    async function onSearchChange(search) {
+        setTextSearch(search);
+        updateDisplayedRecipes();
+    }
 
     const styles = StyleSheet.create({
         column: {
@@ -30,7 +61,8 @@ export default function HomeView() {
         <View style={styles.column}>
             <TextInput
             style={{ height: 40, borderColor: "gray", borderWidth: 1, marginBottom: 10 }}
-            onChangeText={filterRecipes}
+            onChangeText={onSearchChange}
+            value={textSearch}
             />
             <FlatList
             data={filteredRecipes}
