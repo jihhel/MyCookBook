@@ -1,15 +1,15 @@
-import React, {useEffect, useState, useCallback, useRef} from "react";
+import React, { useState, useRef } from "react";
 import {
-  StyleSheet,
-  View,
-  TextInput,
-  FlatList,
-  Button,
-  Dimensions
+    View,
+    TextInput,
+    FlatList,
+    Button,
+    Text
 } from "react-native";
 import {filterRecipes} from "../../Types/Recipe";
 import {RecipeRow} from './RecipeRow';
 import HomeAPI from '../API/HomeAPI';
+import styles from './styles';
 
 export default function HomeView() {
     const [localRecipes, setLocalRecipes] = useState(HomeAPI.getLocalRecipes());
@@ -27,58 +27,40 @@ export default function HomeView() {
         setFilteredRecipes(newFilteredRecipes.concat(marmitonRecipes));
     }
 
-    const centralColumnWidth = Math.min(Dimensions.get('window').width, 600);
-
-    const styles = StyleSheet.create({
-        columnMargins: {
-            flexGrow: 1,
-            flexShrink: 0,
-            flexBasis: 0
-        },
-        centralColumn: {
-            flex: 1, 
-            flexBasis: centralColumnWidth
-        },
-        container: {
-            flex: 1,
-            backgroundColor: "#fff",
-            flexDirection: 'row',
-            justifyContent: 'center',
-        },
-        line: {
-            flexDirection: 'row',
-            height: 50,
-            marginBottom: 50,
-            marginTop: 50,
-            flex: 1,
-        }
-    });
-
     return (
-        <View style={styles.container}>
-            <View style={styles.columnMargins} />
-            <View style={styles.centralColumn}>
-                <View style={styles.line}>
-                    <TextInput
-                    style={{ height: 40, borderColor: "gray", borderWidth: 1, flex: 2 }}
-                    onChangeText={setTextSearch}
-                    value={textSearch}
-                    />
-                    <View>
-                        <Button 
-                            title="Go !" 
-                            style={{flex: 1}}
+        <View style={styles.layout}>
+            <View style={styles.desktopCentralColumn}>
+
+                <View style={styles.header}>
+                    <Text style={styles.mainTitle}>MyCookBook</Text>
+                </View>
+
+                <View style={styles.researchContainer}>
+                    <Text style={styles.researchLabel}>Chercher une recette</Text>
+                    <View style={styles.searchBar}>
+                        <TextInput
+                            style={styles.searchInput}
+                            onChangeText={setTextSearch}
+                            value={textSearch}
+                        />
+                        <Button
+                            title="Chercher !"
+                            style={styles.searchButton}
                             onPress={updateMarmitonRecipes}
+                            color='#ff034d'
                         />
                     </View>
                 </View>
-                <FlatList
-                    data={filteredRecipes}
-                    renderItem={(row) => RecipeRow(row.item)}
-                    keyExtractor={(item) => item.name.value}
-                />
+
+                <View style={styles.searchResults}>
+                    <FlatList
+                        data={filteredRecipes}
+                        renderItem={(row) => RecipeRow(row.item)}
+                        keyExtractor={(item) => item.name.value}
+                    />
+                </View>
+
             </View>
-            <View style={styles.columnMargins} />
         </View>
     );
 }
