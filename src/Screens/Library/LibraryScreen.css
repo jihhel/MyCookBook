@@ -1,0 +1,52 @@
+.mainContainer {
+    display: flex;
+    justify-content: 'center';
+}
+
+.desktopCentralColumn {
+    margin: 0px auto;
+    width: 70%;
+}
+
+.header {
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    text-align: center;
+}
+.mainTitle {
+    font-size: 30px;
+}
+.researchContainer {
+    padding: 1.2rem;
+    border-radius: 10px;
+    border: 1px solid #777;
+}
+.researchLabel {
+    margin-bottom: 0.5rem;
+}
+.searchBar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.searchInput {
+    border: 1px solid #eee;
+    border-radius: 10px;
+    margin-right: 10px;
+    height: 2rem;
+    padding: 0px 10px;
+    background-color:#eee;
+    flex-grow: 1;
+}
+.searchButton {
+    height: 2rem;
+    border: 0px;
+    border-radius: 2px;
+    background-color: #ff034d;
+    color: #fff;
+}
+.searchResults {
+    margin-top: 1rem;
+    padding: 0px 0.8rem;
+}
